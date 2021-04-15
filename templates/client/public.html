@@ -1,0 +1,220 @@
+{% extends 'baseclient.html' %}
+{%block title%}Public Client{%endblock%}
+{% load static %}
+{% block css%}
+<style type="text/css">
+.col-md-3 {
+    display: inline-block;
+    margin-left: -4px;
+}
+
+.carousel-indicators .active {
+    background-color: blue;
+}
+
+.col-md-3 img {
+
+    max-width: 227px;
+    height: 242px;
+}
+
+body .carousel-indicator li {
+    background-color: blue;
+}
+
+body .carousel-indicators {
+    bottom: 0;
+}
+
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon {
+    background-color: blue;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    top: auto;
+    bottom: auto;
+}
+
+body .no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.user_dp {
+    width: 80px;
+    height: 50%;
+    float: right;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 50px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+</style>
+{%endblock%}
+{%block publicActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block sublinks%}
+<form action="/client/public" method="post">{% csrf_token %}
+    <div class="row">
+        <div class="form-group col-6">
+            <select class="form-control" id="select" name="select" style="width: 200px;">
+                <option value="">Select</option>
+                <option value="primary">Primary</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+                <option value="all">Mix</option>
+            </select>
+        </div>
+        <div class="col-6">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</form>
+{%endblock%}
+{%block body%}
+<section>
+    {% if mem_send == 'not_post'%}
+    <!--Slideshow starts here -->
+    {% for data, range, nSlides in all_data %}
+    <h5 class="my-4">Categories {{data.0.category}} - Recommended Freelancer</h5>
+    <div id="demo{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
+        <ul class="carousel-indicators">
+            <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+            {% for i in range %}
+            <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+            {% endfor %}
+        </ul>
+        <div class="container carousel-inner no-padding">
+            <div class="carousel-item active">
+                {%if data.0.category %}
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <div class="card align-items-center" style="width: 18rem;">
+                        <img src='/media/{{data.0.image}}' class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{data.0.name}}</h5>
+                            <p class="card-text">{{data.0.category}} - {{data.0.levels}}</p>
+                            <span id="divpr{{data.0.id}}" class="divpr">
+                                <button id="pr{{data.0.id}}" class="btn btn-primary cart">Get</button>
+                            </span>
+                            <a href="/client/qvFreelancer/{{data.0.id}}"><button id="qv{{data.0.id}}" class="btn btn-primary cart">Quick View</button></a>
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+                {% for i in data|slice:"1:"%}
+                {%if i.category %}
+                <div class="col-xs-3 col-sm-3 col-md-3 p-2">
+                    <div class="card align-items-center" style="width: 18rem;">
+                        <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{i.name}}</h5>
+                            <p class="card-text">{{i.category}} - {{i.levels}}</p>
+                            <span id="divpr{{i.id}}" class="divpr">
+                                <button id="pr{{i.id}}" class="btn btn-primary cart">Get</button>
+                            </span>
+                            <a href="/client/qvFreelancer/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">Quick View</button></a>
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+                {% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
+            </div>
+            <div class="carousel-item">
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="p-3 mt-3 mb-5">
+        <!-- left and right controls for the slide -->
+        <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+    {% endfor %}
+    {%endif%}
+    {% if mem_send == 'post'%}
+    <!--Slideshow starts here -->
+    {% for data, range, nSlides in all_data %}
+    <h5 class="my-4">Categories {{data.0.category}} - Recommended Freelancer</h5>
+    <div id="demo{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
+        <ul class="carousel-indicators">
+            <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+            {% for i in range %}
+            <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+            {% endfor %}
+        </ul>
+        <div class="container carousel-inner no-padding">
+            <div class="carousel-item active">
+                
+                {% if data.0.levels == post_select%}
+                {%if data.0.category%}
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <div class="card align-items-center" style="width: 18rem;">
+                        <img src='/media/{{data.0.image}}' class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{data.0.name}}</h5>
+                            <p class="card-text">{{data.0.category}} - {{data.0.levels}}</p>
+                            <span id="divpr{{data.0.id}}" class="divpr">
+                                <button id="pr{{data.0.id}}" class="btn btn-primary cart">Get</button>
+                            </span>
+                            <a href="/client/qvFreelancer/{{data.0.id}}"><button id="qv{{data.0.id}}" class="btn btn-primary cart">Quick View</button></a>
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+                {%endif%}
+                {% for i in data|slice:"1:"%}
+                {% if i.levels == post_select%}
+                {%if i.cateory%}
+                <div class="col-xs-3 col-sm-3 col-md-3 p-2">
+                    <div class="card align-items-center" style="width: 18rem;">
+                        <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{i.name}}</h5>
+                            <p class="card-text">{{i.category}} - {{i.levels}}</p>
+                            <span id="divpr{{i.id}}" class="divpr">
+                                <button id="pr{{i.id}}" class="btn btn-primary cart">Get</button>
+                            </span>
+                            <a href="/client/qvFreelancer/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">Quick View</button></a>
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+                {% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
+            </div>
+            <div class="carousel-item">
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="p-3 mt-3 mb-5">
+        <!-- left and right controls for the slide -->
+        <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+    {% endfor %}
+    {%endif%}
+</section>
+{%endblock%}

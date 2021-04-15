@@ -1,0 +1,92 @@
+{% extends 'baseclient.html' %}
+{%block title%}Chat{%endblock%}
+{% load static %}
+{% block css%}
+    <link rel="stylesheet" type="text/css" href="/static/css/chatCss.css">
+    <style type="text/css">
+    .size {
+        width: 300px;
+        margin: auto;
+    }
+
+    .user_dp {
+        width: 80px;
+        height: 50%;
+        float: right;
+        margin-right: 20px;
+        border-radius: 50%;
+    }
+
+    .client_dp {
+        width: 50px;
+        height: 50%;
+        float: left;
+        margin-left: 20px;
+        border-radius: 50%;
+    }
+    @media (min-width: 990px) {
+        .card{
+        width: 30rem;
+    }
+    }
+    .myCard{
+        margin-left: 100px; position: relative;
+    }
+    @media (max-width: 500px) {
+        .myCard{
+        margin-left: 0px; position: relative;
+    }
+    }
+    </style>
+{%endblock%}
+{%block chatActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+    <section class="container">
+    <span class=""><i class="zmdi zmdi-spinner float-right mr-4"><strong> {{x.username}} </strong></i></span><br>
+    <hr>
+    
+    <div>
+
+        <img class="user_dp" src="/media/{{x.image}}">
+        <span><h5><i class="zmdi zmdi-account " style="font-size: 13px;" > {{x.username}} </i></span><br>
+        <span><i class="zmdi zmdi-mail-send" style="font-size: 13px;"> {{x.email}}</i></span><br>
+        <span style="font-size: 13px;"> {{x.category}}</span><br>
+
+    </div>
+    <hr>
+    <div>
+        <ul class="nav nav-tabs nav-pills">
+          <li class="nav-item mx-auto active">
+           <a href="#"> <i class="zmdi zmdi-widgets nav-link" style="font-size: 20px;"></i></a>
+          </li>
+          <li class="nav-item mx-auto">
+           
+           <a href="#"> <i class="zmdi zmdi-collection-image nav-link" style="font-size: 20px;"></i></a>
+          </li>
+          <li class="nav-item mx-auto">
+             <a href="#"><i class="zmdi zmdi-notifications fa-3x nav-link" style="font-size: 20px;"></i></a>
+          </li>
+          <li class="nav-item mx-auto">
+            <a href="#"><i class="zmdi zmdi-accounts-list-alt nav-link" style="font-size: 20px;"></i></a>
+            
+          </li>
+
+        </ul>
+    </div>
+    <hr>
+    {% for i in chat%}
+    {% if i.client.name == x.name %}
+    <div class="contact">
+        <a href="/chat/client/{{i.projectId}}{{i.freelancer.username}}{{x.username}}/">
+        <img class="client_dp" src="/media/{{i.freelancer.image}}">
+        <div style="margin-left: 100px; position: relative;">
+            <span> {{i.freelancer.username}} linked project - {{i.projectId}}</span><br>
+            <i style="font-size: 15px; opacity: 0.6;">online</i>
+        </div>
+        </a>
+        <hr>
+    </div>
+    {%endif%}
+    {%endfor%}
+</section>
+{%endblock%}

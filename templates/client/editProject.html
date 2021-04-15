@@ -1,0 +1,211 @@
+{% extends 'baseclient.html' %}
+{%block title%}Update Project - Client{%endblock%}
+{% load static %}
+{% block css%}
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+    selector: "#desc",
+     setup: function (editor) {
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    },
+    height:656,
+    plugins: [
+        'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+        'table emoticons template paste help'
+      ],
+      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+        'forecolor backcolor emoticons | help',
+      menu: {
+        favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+      },
+      menubar: 'favs file edit view insert format tools table help',
+      content_css: 'css/content.css'
+    });
+    </script>
+<style type="text/css">
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.user_dp {
+    width: 80px;
+    height: 50%;
+    float: right;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 50px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+
+@media (min-width: 990px) {
+    .card {
+        width: 30rem;
+    }
+}
+
+.myCard {
+    margin-left: 100px;
+    position: relative;
+}
+
+@media (max-width: 500px) {
+    .myCard {
+        margin-left: 0px;
+        position: relative;
+    }
+}
+</style>
+{%endblock%}
+{%block projectActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+<div class="">
+    <!--For loop portion-->
+    {% for i in data%}
+    {% if i.clientId == x.cid %}
+    {%if i.projectId == id %}
+    <div class="container mt-5">
+        <span class="text-success mt-3 mb-3" id="rqst"></span>
+        <h3 class="text-center">Update your project here</h3>
+        <form action="/client/updateProject/{{i.projectId}}" class="p-5 mt-5 mb-5" method="post">{% csrf_token %}
+            <div class="form-group">
+                <label for="name">Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{i.title}}" placeholder="Enter Your Projects Title" required>
+            </div>
+            <div class="form-group">
+                <label for="select">Project Category ?</label>
+                <select class="form-control" id="category" name="category"  style="width: 200px;" required>
+                    <option value="{{i.category}}"> {{i.category}} </option>
+                    <option value="web developer">webdeveloper</option>
+                    <option value="graphics designer">graphicsdesign</option>
+                    <option value="dataenrty">dataenrty</option>
+                    <option value="videoanimation">videoanimation</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="select">Project Sub Category ?</label>
+                <select class="form-control" id="subcategory" name="subcategory" style="width: 200px;" required>
+                    <option value="{{i.subcategory}}">{{i.subcategory}}</option>
+                    <option value="developer">developer</option>
+                    <option value="designer">designer</option>
+                    <option value="editior">editior</option>
+                    <option value="animator">animator</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="desc">Description Of Project </label>
+                    <textarea class="form-control" id="desc" name="desc" rows="3" required>{{i.content}}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="date">Deadline (Required)</label>
+                <input type="date" class="form-control" id="deadline" value={{i.deanline|safe}} name="deadline" placeholder="Enter Deadline" required style="width: 200px;">
+            </div>
+            <div class="form-group">
+                <label for="select">Category Which You Want To Publish Your Project</label>
+                <select class="form-control" onchange="choice1(this)" id="select" name="select" style="width: 200px;" required>
+                    <option value="{{i.publishCategory}}"> {{i.publishCategory}}</option>
+                    <option value="primary">Primary</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="name">Budget IN Rupees</label>
+                <input style="width: 200px;" data-toggle="tooltip" type="Number" class="equipCatValidation form-control" id="price" name="price" placeholder="Enter Your Budget In Between" value="{{i.budget}}" required>
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </div>
+</div>
+{%endif%}
+{% endif %}
+{%endfor%}
+</div>
+<script type="text/javascript">
+function choice1(select) {
+    var c = select.options[select.selectedIndex].text;
+    if (c == "Primary") {
+        document.getElementById("price").placeholder = "100 - 10k"
+
+    } else if (c == "Intermediate") {
+        document.getElementById("price").placeholder = "10k - 20k"
+    } else if (c == "Advanced") {
+        document.getElementById("price").placeholder = "20k - 100k"
+    }
+}
+$('.equipCatValidation').on('change', function(e) {
+    var c = select.options[select.selectedIndex].text;
+     if (c == "Primary") {
+        if ($(this).val() < 100 &&
+            e.keyCode !== 46 &&
+            e.keyCode !== 8
+        ) {
+            e.preventDefault();
+            $(this).val(100);
+        }
+        else{
+        if ($(this).val() > 10000 &&
+            e.keyCode !== 46 &&
+            e.keyCode !== 8
+        ) {
+            e.preventDefault();
+            $(this).val(10000);
+        }
+    }
+    }
+    //.......................................
+    else  if (c == "Intermediate") {
+        if ($(this).val() < 10000 &&
+            e.keyCode !== 46 &&
+            e.keyCode !== 8
+        ) {
+            e.preventDefault();
+            $(this).val(10000);
+        }
+        else{
+        if ($(this).val() > 10000 &&
+            e.keyCode !== 46 &&
+            e.keyCode !== 8
+        ) {
+            e.preventDefault();
+            $(this).val(20000);
+        }
+    }
+    }
+    //.......................................
+    else  if (c == "Advanced") {
+        if ($(this).val() < 20000 &&
+            e.keyCode !== 46 &&
+            e.keyCode !== 8
+        ) {
+            e.preventDefault();
+            $(this).val(20000);
+        }
+        else{
+        if ($(this).val() > 100000 &&
+            e.keyCode !== 46 &&
+            e.keyCode !== 8
+        ) {
+            e.preventDefault();
+            $(this).val(1000000);
+        }
+    }
+    }
+
+});
+</script>
+{%endblock%}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{%block title%}Result - Freelancer{%endblock%}
+{% load static %}
+{% block css%}
+{%endblock %}
+{%block testActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+{%if flag == '1' %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1>Your Score is - {{score}}</h1>
+        <p>You have clear the Exam. Welcome to our newbieshu platform. YOu will be redirected to profile section in 7 second...</p>
+    </div>
+</div>
+<script>
+var timer = setTimeout(function() {
+    window.location = '/freelancer/myProfile'
+}, 7000);
+</script>
+{%else%}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1>Your Score is - {{score}}</h1>
+        <p>Sorry!! you have not clear the Exam. Better luck next time. You can get free courses by newbieshub platform <a href="#">
+        	click me.
+        </a> Thank you.</p>
+    </div>
+</div>
+{%endif%}
+{%endblock %}

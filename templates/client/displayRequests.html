@@ -1,0 +1,82 @@
+{% extends 'baseclient.html' %}
+{%block title%}Request - Client{%endblock%}
+{% load static %}
+{% block css%}
+<style type="text/css">
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.user_dp {
+    width: 80px;
+    height: 50%;
+    float: right;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 50px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+@media (min-width: 990px) {
+    .card{
+    width: 30rem;
+}
+}
+.myCard{
+    margin-left: 100px; position: relative;
+}
+@media (max-width: 500px) {
+    .myCard{
+    margin-left: 0px; position: relative;
+}
+}
+</style>
+{%endblock%}
+
+{%block requestActive%}  btn btn-outline-success btn-sm{%endblock%}
+
+{%block body%}
+{%for j in freelancer%}
+{%if j.clientId == client.cid%}
+<div class="">
+    <!--For loop portion-->
+
+    {% for i in data%}
+    {% if i.freelancer.name == j.freelance %}
+    {% if i.projectId == j.projectId %}
+    <div class="p-2">
+        <img class="client_dp" src="/media/{{j.freelancer.image}}">
+        <div class="myCard">
+            <p><strong>{{j.freelancer.name}} has requested to you. regarding project Id - {{i.projectId}} </strong></p>
+            <i style="font-size: 15px; opacity: 0.6;">Publish To Cartegory - {{i.category}}</i><br>
+            <span>Publish - {{i.date_start}}</span><br>
+            <div class="p-2">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title"> <a href="#"> {{j.title}}</a></h5>
+                        <p class="card-text">Description - {{j.content|safe}}</p>
+                         <form action="/client/displayRequests" class="" method="post">{% csrf_token %}
+                            <input class="d-none" type="text" name="freelancer" value="{{j.freelancer.username}}">
+                            <input class="d-none" type="number" name="projectId" value="{{j.projectId}}">
+                            <input class="d-none" type="text" name="client" value="{{client.username}}">
+                            <button type="submit" id='sub2' class="btn btn-primary">Accept</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    {%endif%}
+    {% endif %}
+    {%endfor%}
+</div>
+{%endif%}
+{%endfor%}
+{%endblock%}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{%block title%}Test - {{request.session.mainName}}{%endblock%}
+{% load static %}
+{% block css%}
+{%endblock%}
+{%block testActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+<div class="container">
+    <center><h1>Question {{ questions.end_index }} of  {{count}}</h1></center>
+                    <div class="col-lg-8 border border-success p-4 m-4 mx-auto">
+                                {% for i in questions%}
+                                <h1>{{i.question}}</h1>
+                                <form>
+                                    <div class="radio">
+                                    <label><input type="radio" name="name"  id="option1" value="{{i.q1}}">{{i.q1}} </label> 
+                                    </div>
+                                    <div class="radio">
+                                    <label > <input type="radio" name="name"  id="option2" value="{{i.q2}}">{{i.q2}}</label>
+                                  </div>
+                                  <div class="radio">
+                                    <label ><input type="radio" name="name" id="option3" value="{{i.q3}}">{{i.q3}}</label>
+                                  </div>
+                                    <div class="radio">
+                                    <label ><input type="radio" name="name"  id="option4" value="{{i.q4}}">{{i.q4}} </label>
+                                </div>
+                            </form>
+                                {%endfor%}
+                                <div class="form-group">
+                                    <button class="btn  btn-success" id="save_ans">Submit Answer</button>
+                                </div>
+                                <div class="paginetor">
+                                  <div class="form-group">
+                                    {%  if questions.has_next %}
+                                    <a href="?page={{ questions.next_page_number }}"><button class="btn form-control btn-primary" id="submitAnswer">Next</button></a>
+                                  {% else %}
+                                   <a href="/freelancer/result"><button class="btn form-control btn-success" id="submitAnswer">Submit Quiz</button></a>  
+                                  {% endif %} 
+                                  </div>
+                                 </div>  
+                    </div>
+</div>
+
+<script type="text/javascript">
+  window.onload = initall;
+  var  saveBookButton ;
+  function initall() {
+      saveBookButton=document.getElementById('save_ans')
+      saveBookButton.onclick = save_ans;
+  }
+  function save_ans() {
+      var ans = $("input:radio[name=name]:checked").val()
+      alert("answer submited go next")
+      var url = '/freelancer/save_ans?ans='+ans
+      var req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+      //  alert(req.responseText)
+      }
+    };
+    req.open("GET", url, true);
+    req.send();
+  }
+</script>
+{%endblock%}

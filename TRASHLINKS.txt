@@ -1,0 +1,19 @@
+https://channels.readthedocs.io/en/stable/tutorial/part_2.html
+# for the redish sserver problem
+https://stackoverflow.com/questions/64227425/connectionrefusederror-errno-10061-connect-call-failed-127-0-0-1-6379-we
+
+
+#message plugin for the django web
+https://pypi.org/project/django-messages-ui/
+
+
+projects lists..
+https://code-projects.org/simple-chat-app-using-django-rest-framework/
+
+
+
+docs/tutorial/part_2.rst
+https://channels.readthedocs.io/en/stable/tutorial/part_2.html
+
+
+python -m pip freeze

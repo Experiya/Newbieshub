@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{%block title%}Timeline - Freelancer{%endblock%}
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="/static/chat/style.css">
+<style type="text/css">
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.time_date_sent {
+    color: #f5f5f5;
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+}
+
+.time_date_replies {
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+}
+
+.chat_dp {
+    width: 50px;
+    height: 50%;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 150px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+
+@media (min-width: 990px) {
+    .card {
+        width: 30rem;
+    }
+}
+
+.myCard {
+    margin-left: 100px;
+    position: relative;
+}
+
+@media (max-width: 500px) {
+    .myCard {
+        margin-left: 0px;
+        position: relative;
+    }
+}
+</style>
+{%endblock%}
+{%block timelineActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+<div class="">
+    <!--For loop portion-->
+    <div class="p-2 d-flex justify-content-center align-items-center">
+        <img class="client_dp" src="/media/{{project.client.image}}">
+        <div class="myCard">
+            <p><strong>Project Id - {{project.projectId}}</strong></p>
+            <i style="font-size: 15px; opacity: 0.6;">Publish To Cartegory - {{project.publishCategory}} {{project.category}}</i><br>
+            <span>Publish - {{project.date_start}}</span><br>
+            <div class="p-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"> <a href="#"> {{project.title}}</a></h5>
+                        <p class="card-title">Budget - ₹ {{project.budget}}</p>
+                        <p class="card-text">Description - {{project.content|safe}}</p>
+                        <p class="card-text">Deadline - {{project.deanline}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<div>
+    <ul class="nav nav-tabs nav-pills">
+      <li class="nav-item mx-auto active">
+       <a href="/freelancer/viewTimeline/{{project.projectId}}"> <i class="zmdi zmdi-widgets nav-link" style="font-size: 20px;"></i></a>
+      </li>
+      <li class="nav-item mx-auto">
+       
+       <a href="/freelancer/uploadFiles/{{project.projectId}}"> <i class="zmdi zmdi-collection-image nav-link" style="font-size: 20px;"></i></a>
+      </li>
+      <li class="nav-item mx-auto">
+         <a href="/freelancer/makeReport/{{project.projectId}}"><i class="zmdi zmdi-notifications fa-3x nav-link" style="font-size: 20px;"></i></a>
+      </li>
+      <li class="nav-item mx-auto">
+        <a href="#"><i class="zmdi zmdi-accounts-list-alt nav-link" style="font-size: 20px;"></i></a>
+        
+      </li>
+
+    </ul>
+</div>
+<section class="w-50 ">
+    <div class="messages">
+        <ul>
+            {%for i in text %}
+            {%if i.freelancer.username == request.session.mainName%}
+            {% if i.client.username  == project.client.username%}
+            {%if i.flag == request.session.mainName%}
+            <li class="replies">
+                <img class="chat_dp" src="/media/{{freelancer.image}}" alt="" />
+                <p>{{i.text}} <span class="time_date_replies"> {{i.timestamp}}</span></p>
+            </li>
+            
+            {%else%}
+            <li class="sent">
+                <img class="chat_dp" src="/media/{{project.client.image}}" alt="" />
+                <p>{{i.text}} <span class=" time_date_sent"> {{i.timestamp}}</span></p>
+            </li>
+            {%endif%}
+            {%endif%}
+            {%endif%}
+            {%endfor%}
+        </ul>
+    </div>
+    <div class="p-2 mt-5 mb-5">
+        <form class="" action="/freelancer/viewTimeline/{{project.projectId}}" method="post">
+            {% csrf_token %}
+            <input class="w-80 border border-primary rounded" type="text" name="text" placeholder="Enter saomething here">
+            <input type="hidden" name="projectNo" value="{project.projectId}">
+            <input class="w-20 border border-primary rounded" name="submit_button" type="submit" value="Send">
+        </form>
+    </div>
+
+
+
+</section>
+
+{%endblock%}

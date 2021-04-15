@@ -1,0 +1,82 @@
+{% extends 'baseIndex.html' %}
+{%block title%}Chat Room{%endblock%}
+{% load static %}
+{% block css%}
+<script src="{%static 'reconnecting-websocket.js'%}"></script>
+{%endblock%}
+{%block chatActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+<center>Newbieshub Chat</center>
+<section class="">
+    <div class="d-flex justify-content-center align-items-center">
+        <textarea class="bg-light border border-primary rounded p-4 mt-3" id="chat-log" cols="100" rows="20">
+        </textarea><br>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+        <input id="chat-message-input" class="border border-primary rounded" type="text" placeholder="type something" size="80">
+        <button id="chat-message-submit" value="Send" type="button" class="btn btn-primary mt-1 ml-2">Send</button>
+    </div>
+</section>
+{{ room_name|json_script:"room-name" }}
+<script>
+const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+const chatSocket = new WebSocket(
+    'ws://' +
+    window.location.host +
+    '/ws/chat/' +
+    roomName +
+    '/'
+);
+
+chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    var k = document.querySelector('#chat-log');
+    var a = "{{who}}";
+    if (a == "freelancer") {
+        k.style.color = 'red';
+    }
+    if (a == 'client') {
+        k.style.color = 'blue';
+    }
+    k.value += (data.message+ '\n');
+};
+
+chatSocket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+};
+
+document.querySelector('#chat-message-input').focus();
+document.querySelector('#chat-message-input').onkeyup = function(e) {
+    if (e.keyCode === 13) { // enter, return
+        document.querySelector('#chat-message-submit').click();
+    }
+};
+
+document.querySelector('#chat-message-submit').onclick = function(e) {
+    const messageInputDom = document.querySelector('#chat-message-input');
+    const message = messageInputDom.value;
+    var a = "{{who}}";
+    if (a == 'freelancer') {
+        b = "{{request.session.mainName}}"
+    } else if (a == 'client') {
+        b = "{{request.session.clientName}}"
+    }
+    var date = new Date();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+
+
+    chatSocket.send(JSON.stringify({
+        'message': message + " - " + b + " " + strTime,
+        'command': 'fetch_messages',
+    }));
+    messageInputDom.value = '';
+};
+</script>
+{%endblock%}

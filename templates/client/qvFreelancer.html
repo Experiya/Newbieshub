@@ -1,0 +1,109 @@
+{% extends 'baseclient.html' %}
+{%block title%}View Freelancer{%endblock%}
+{% load static %}
+{% block css%}
+<style>
+    .size {
+        width: 300px;
+        margin: auto;
+    }
+
+    .user_dp {
+        width: 80px;
+        height: 50%;
+        float: right;
+        margin-right: 20px;
+        border-radius: 50%;
+    }
+
+    .client_dp {
+        width: 50px;
+        height: 50%;
+        float: left;
+        margin-left: 20px;
+        border-radius: 50%;
+    }
+    @media (min-width: 990px) {
+        .card{
+        width: 30rem;
+    }
+    }
+    .myCard{
+        margin-left: 100px; position: relative;
+    }
+    @media (max-width: 500px) {
+        .myCard{
+        margin-left: 0px; position: relative;
+    }
+    }
+    </style>
+{%endblock%}
+{%block body%}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <img src="/media/{{data.image}}" width="200px" height="200px">
+            </div>
+            <div class="row mt-3">
+                <button class="btn btn-primary p-2" data-toggle="modal" data-target="#myModal">Make Request</button>
+                <button class="btn btn-primary p-2 ml-2">Save Next</button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h5>{{data.name}}</h5>
+            <p><b>Category {{data.category}} </b></p>
+            <p>Stage {{data.levels}}</p>
+            <p>Join Data {{data.date}}</p>
+            <p><i>Bio - Here Will be the full bio</i></p>
+            <P><i>At the bottom section the client will see the projects that the freelancer's has done before. Or the full dtails of the panding or upcomming projects details</i></p>
+        </div>
+    </div>
+    <div class="">
+        <h1 class="text-center mt-3 mb-3">Freelancer - {{data.username}}'s Gig Profile</h1>
+        <!--For loop portion-->
+        {% for i in y%}
+        {% if i.freelancerId == x.id %}
+        <div class="p-2">
+            <img class="client_dp" src="/media/{{x.image}}">
+            <div class="myCard">
+                <div class="p-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"> <a href="#"> {{i.title}}</a></h5>
+                            <p class="card-text">Description - {{i.content|safe}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% endif %}
+        {%endfor%}
+    </div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/client/qvFreelancer/{{x.id}}" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <label for="projectId">Project Id </label>
+                            <input type="number" class="form-control" id="projectId" placeholder="Link your project id " name="projectId">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endblock%}

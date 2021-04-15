@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{%block title%}Make Report - Freelancer{%endblock%}
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="/static/chat/style.css">
+<style type="text/css">
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.time_date_sent {
+    color: #f5f5f5;
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+}
+
+.time_date_replies {
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+}
+
+.chat_dp {
+    width: 50px;
+    height: 50%;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 150px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+
+@media (min-width: 990px) {
+    .card {
+        width: 30rem;
+    }
+}
+
+.myCard {
+    margin-left: 100px;
+    position: relative;
+}
+
+@media (max-width: 500px) {
+    .myCard {
+        margin-left: 0px;
+        position: relative;
+    }
+}
+</style>
+{%endblock%}
+{%block timelineActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+<div>
+    <ul class="nav nav-tabs nav-pills">
+      <li class="nav-item mx-auto active">
+       <a href="/freelancer/viewTimeline/{{project.projectId}}"> <i class="zmdi zmdi-widgets nav-link" style="font-size: 20px;"></i></a>
+      </li>
+      <li class="nav-item mx-auto">
+       
+       <a href="/freelancer/uploadFiles/{{project.projectId}}"> <i class="zmdi zmdi-collection-image nav-link" style="font-size: 20px;"></i></a>
+      </li>
+      <li class="nav-item mx-auto">
+         <a href="/freelancer/makeReport/{{project.projectId}}"><i class="zmdi zmdi-notifications fa-3x nav-link" style="font-size: 20px;"></i></a>
+      </li>
+      <li class="nav-item mx-auto">
+        <a href="#"><i class="zmdi zmdi-accounts-list-alt nav-link" style="font-size: 20px;"></i></a>
+        
+      </li>
+
+    </ul>
+</div>
+<div class="container mb-3 mt-3">
+    <div class="row">
+
+        <div class="card mx-auto my-2 p-2 align-items-center" style="width: 18rem;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoRsJySqtIEVxs-wcJ0WXFq55xQuoWfzyEMw&usqp=CAU" class="padded card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title text-center">Make report to  {{project.freelancer}}</h5>
+                <p class="card-text text-center"></p>
+                <form id="myForm2" action="/freelancer/makeReport/{{project.projectId}}"method="post">{% csrf_token %}
+                <a href="#" id="#myButton" class="btn btn-primary d-block submit">Submit</a>
+                </form>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("a.submit").click(function(){
+            document.getElementById("myForm2").submit();
+        }); 
+    });
+</script>
+{%endblock%}

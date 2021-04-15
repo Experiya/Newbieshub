@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{%block title%}Project - Client{%endblock%}
+{% load static %}
+{% block css%}
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+    selector: "#desc",
+     setup: function (editor) {
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    },
+    height:656,
+    plugins: [
+        'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+        'table emoticons template paste help'
+      ],
+      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+        'forecolor backcolor emoticons | help',
+      menu: {
+        favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+      },
+      menubar: 'favs file edit view insert format tools table help',
+      content_css: 'css/content.css'
+    });
+    </script>
+
+<style type="text/css">
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.user_dp {
+    width: 80px;
+    height: 50%;
+    float: right;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 50px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+@media (min-width: 990px) {
+    .card{
+    width: 30rem;
+}
+}
+.myCard{
+    margin-left: 100px; position: relative;
+}
+@media (max-width: 500px) {
+    .myCard{
+    margin-left: 0px; position: relative;
+}
+}
+</style>
+{%endblock%}
+
+{%block publicActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+
+
+
+
+
+<div class="">
+    <!--For loop portion-->
+
+    <div class="p-2">
+        <img class="client_dp" src="/media/{{project.client.image}}">
+        <div class="myCard">
+            <p><strong>Project Id - {{project.projectId}}</strong></p>
+            <i style="font-size: 15px; opacity: 0.6;">Publish To Cartegory - {{project.publishCategory}} {{project.category}}</i><br>
+            <span>Publish - {{project.date_start}}</span><br>
+            <div class="p-2">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title"> <a href="#"> {{project.title}}</a></h5>
+                        <p class="card-title">Budget - ₹ {{project.budget}}</p>
+                        <p class="card-text">Description - {{project.content|safe}}</p>
+                        <p class="card-text">Deadline - {{project.deanline}}</p>
+
+
+                        <!--<button  id='{{project.projectId}}' onclick="location.href='/client'" type="btn" class="btn btn-primary rounded">Show ALl Project </button>-->
+
+
+                        <button class="btn btn-primary p-2" data-toggle="modal" data-target="#myModal">Make Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="/freelancer/qvProject/{{project.projectId}}" method="POST">{% csrf_token %}
+
+                    <div class="form-group">
+                        <input class="d-none" type="text" name="id" value="{{project.projectId}}">
+                        <input class="d-none" type="text" name="client" value="{{project.client.cid}}">
+                        <div class="form-group">
+                            <label for="desc">Description Of Your Proposal </label>
+                            <textarea class="form-control" id="desc" name="desc" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+{%endblock%}

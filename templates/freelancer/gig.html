@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{%block title%}Gig - Freelancer{%endblock%}
+{% load static %}
+{% block css%}
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+    selector: "#desc",
+     setup: function (editor) {
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    },
+    height:656,
+    plugins: [
+        'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+        'table emoticons template paste help'
+      ],
+      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+        'forecolor backcolor emoticons | help',
+      menu: {
+        favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+      },
+      menubar: 'favs file edit view insert format tools table help',
+      content_css: 'css/content.css'
+    });
+    </script>
+
+    <style type="text/css">
+    .size {
+        width: 300px;
+        margin: auto;
+    }
+
+    .user_dp {
+        width: 80px;
+        height: 50%;
+        float: right;
+        margin-right: 20px;
+        border-radius: 50%;
+    }
+
+    .client_dp {
+        width: 50px;
+        height: 50%;
+        float: left;
+        margin-left: 20px;
+        border-radius: 50%;
+    }
+    @media (min-width: 990px) {
+        .card{
+        width: 30rem;
+    }
+    }
+    .myCard{
+        margin-left: 100px; position: relative;
+    }
+    @media (max-width: 500px) {
+        .myCard{
+        margin-left: 0px; position: relative;
+    }
+    }
+    </style>
+{%endblock%}
+{%block gigActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+
+<div class="">
+    <!--For loop portion-->
+    {% for i in y%}
+    {% if i.freelancerId == x.id %}
+    <div class="p-2">
+        <img class="client_dp" src="/media/{{x.image}}">
+        <div class="myCard">
+            <div class="p-2">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title"> <a href="#"> {{i.title}}</a></h5>
+                        <p class="card-text">Description - {{i.content|safe}}</p>
+
+                        <button  id='{{i.gigId}}' onclick="location.href='/freelancer/deleteGig/{{i.gigId}}'" type="btn" class="btn btn-primary rounded">Delete</button>
+                        <button  id='{{i.gigId}}' onclick="location.href='/freelancer/editGig/{{i.gigId}}'" type="btn" class="btn btn-primary rounded">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    {% endif %}
+    {%endfor%}
+</div>
+
+<div class="container mt-5">
+    <span class="text-success mt-3 mb-3" id="rqst"></span>
+    <h3 class="text-center">Create your gig here</h3>
+    <form action="/freelancer/myGig" class="p-5 mt-5 mb-5" method="post">{% csrf_token %}
+        <div class="form-group">
+            <label for="name">Gig Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter Your Projects Title" required>
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <label for="desc">Description Of Project </label>
+                <textarea class="form-control" id="desc" name="desc" rows="3" required></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+</div>
+{%endblock%}

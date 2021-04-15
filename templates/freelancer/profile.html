@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{%block title%}Profile{%endblock%}
+{% load static %}
+{% block css%}
+<style type="text/css">
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.user_dp {
+    width: 80px;
+    height: 50%;
+    float: right;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 50px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+</style>
+{%endblock%}
+{%block profileActive%} btn btn-outline-success btn-sm{%endblock%}
+
+{%block body%}
+{% if request.session.mainReview == 0 %}
+ <div class="container">
+     <div class="toast" data-autohide="false">
+         <div class="toast-header">
+             <strong class="mr-auto text-primary">Alert</strong>
+             <small class="text-muted">1 sec ago</small>
+             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+         </div>
+         <div class="toast-body">
+             To bid on projects kindly clear the <span class="text-muted">Review test</span> exam
+         </div>
+     </div>
+ </div>
+ <script>
+ $(document).ready(function() {
+     $('.toast').toast('show');
+ });
+ </script>
+{%endif%}
+<section>
+    <section class="text-gray-600 body-font overflow-hidden">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="lg:w-4/5 mx-auto flex flex-wrap">
+                <img alt="newbieshub can't load this image" class="lg:w-1/2 w-32  h-50 object-cover object-center rounded" src="/media/{{x.image}}">
+                <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                    <h2 class="text-sm title-font text-gray-500 tracking-widest">The Full Details</h2>
+                    <h1 class="text-gray-900 text-3x2 title-font font-medium mb-1 mt-4"></h1>
+                    <div class="flex  my-5">
+                        <dl class="row">
+                            <dt class="col-sm-6">NAME :</dt>
+                            <dd class="col-sm-6">{{x.name}}</dd>
+                            <dt class="col-sm-6">ID :</dt>
+                            <dd class="col-sm-6">{{x.id}}</dd>
+                            <dt class="col-sm-6">USERNAME :</dt>
+                            <dd class="col-sm-6">{{x.username}}</dd>
+                            <dt class="col-sm-6">CATEGORY :</dt>
+                            <dd class="col-sm-6">{{x.category}}</dd>
+                            <dt class="col-sm-6">REVIEWS :</dt>
+                            <dd class="col-sm-6">{{x.rating}}</dd>
+                            <dt class="col-sm-6 text-truncate">LEVEL :
+                            </dt>
+                            <dd class="col-sm-6">{{x.levels}}</dd>
+                            <dt class="col-sm-6 text-truncate">EDIT DETAILS :
+                            </dt>
+                            <dd class="col-sm-6">
+                                <td><a href="/freelancer/updateProfile/{{x.id}}" id='{{x.id}}'><i class="zmdi zmdi-edit"></i></a></td>
+                            </dd>
+                            <dd class="col-sm-6">
+                                <td>
+                                    {%if x.category == ""%}
+                                    <span class="text-danger">You have not choose any category</span>
+                                    
+                                    <form class="" action="/freelancer/myProfile"  enctype="multipart/form-data" method="post">{% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="select">Freelancer Category ?</label>
+                                            <select class="form-control" id="category" name="category" style="width: 200px;" required>
+                                                <option value=""> Select</option>
+                                                <option value="web developer">webdeveloper</option>
+                                                <option value="graphics designer">graphicsdesign</option>
+                                                <option value="dataenrty">dataenrty</option>
+                                                <option value="videoanimation">videoanimation</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="select">Freelancer Sub Category ?</label>
+                                            <select class="form-control" id="subcategory" name="subcategory" style="width: 200px;" required>
+                                                <option value=""> Select</option>
+                                                <option value="developer">developer</option>
+                                                <option value="designer">designer</option>
+                                                <option value="editior">editior</option>
+                                                <option value="animator">animator</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="image" class="leading-7 text-sm text-gray-600">Profile Picture</label>
+                                            <input required type="file" id="image" name="image" accept="image/*" class="">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                    {%endif%}
+                                </td>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+    </section>
+</section>
+<!--<div class="row" >
+    <div class=" col-md-6  jumbotron">
+        <h1>{{x.name}}</h1>
+        <h1><i class="zmdi zmdi-account " style="font-size: 20px;"> {{name}} - Id {{x.id}}</i></h1>
+        <h1><i class="zmdi zmdi-mail-send" style="font-size: 20px;"> {{x.email}}</i></h1>
+        <span class="mt-3" style="font-size: 20px;"> <i class="zmdi zmdi-mail-send" style="font-size: 20px;"> {{x.levels}} </i></span><br>
+    </div>
+    <div class="col-md-6 p-2 jumbotron">
+        <div class="">
+            <div>
+                <img src='/media/{{x.image}}' style="border-radius:50%; width: 200px; height: 200px; float: right;"  class="img image-rounded p-2">
+            </div>
+        </div>
+    </div>
+</div>-->
+<!--<img src='/media/{{x.image}}'  style="border-radius:50%; width: 200px; height: 200px; float: right;" class="img image-rounded p-2">-->
+{%endblock%}

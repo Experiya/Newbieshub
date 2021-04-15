@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{%block title%}Public - Freelancer{%endblock%}
+{% load static %}
+{% block css%}
+<style type="text/css">
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.user_dp {
+    width: 80px;
+    height: 50%;
+    float: right;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 50px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+
+
+.portfolio #portfolio-flters {
+    padding: 0;
+    margin: 0 auto 25px auto;
+    list-style: none;
+    text-align: center;
+    border-radius: 50px;
+}
+
+.portfolio #portfolio-flters li {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #444444;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.cardImage {
+    display: inline-block;
+    margin-left: -4px;
+}
+
+.cardImage img {
+
+    max-width: 227px;
+    height: 242px;
+}
+</style>
+{%endblock%}
+{%block publicActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+<div class="container">
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="portfolio-flters">
+                        <li data-filter="*" class="filter-active">All</li>
+                        <li data-filter=".filter-app">App</li>
+                        <li data-filter=".filter-card">Card</li>
+                        <li data-filter=".filter-web">Web</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                {% for k in x%}
+                {% if k.category == y.category%}
+                {% if k.publishCategory == y.levels %}
+                <div class="col-lg-3 col-md-4 portfolio-item filter-app">
+                    <div class="card align-items-center cardImage" style="width: 18rem;">
+                        <img src='/media/{{k.client.image}}' class="card-img-top" alt="...">
+                        <div class="card-body">
+                            
+                            <h5 class="card-title">{{k.client.username}}</h5>
+                            <p class="card-text">{{k.title}}</p>
+                            <p class="card-text">Budget {{k.budget}} & {{k.deanline}}</p>
+                            <span id="divpr{{data.0.id}}" class="divpr">
+                                <button id="pr{{data.0.id}}" class="btn btn-primary cart">Get</button>
+                            </span>
+                            <a href="/freelancer/qvProject/{{k.projectId}}"><button id="qv{{k.projectId}}" class="btn btn-primary cart">Quick View</button></a>
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+                {%endif%}
+                {%endfor%}
+            </div>
+        </div>
+    </section>
+
+{%endblock%}

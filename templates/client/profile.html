@@ -1,0 +1,85 @@
+{% extends 'baseclient.html' %}
+{%block title%}Profile{%endblock%}
+{% load static %}
+{% block css%}
+<style type="text/css">
+.size {
+    width: 300px;
+    margin: auto;
+}
+
+.user_dp {
+    width: 80px;
+    height: 50%;
+    float: right;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.client_dp {
+    width: 50px;
+    height: 50%;
+    float: left;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+</style>
+{%endblock%}
+{%block profileActive%} btn btn-outline-success btn-sm{%endblock%}
+{%block body%}
+<section>
+    <section class="text-gray-600 body-font overflow-hidden">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="lg:w-4/5 mx-auto flex flex-wrap">
+                <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-20 object-cover object-center rounded" src="/media/{{x.image}}">
+                <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                    <h2 class="text-sm title-font text-gray-500 tracking-widest">The Full Details This in the client side</h2>
+                    <h1 class="text-gray-900 text-3x2 title-font font-medium mb-1 mt-4"></h1>
+                    <div class="flex  my-5">
+                        <dl class="row">
+                            <dt class="col-sm-6">NAME :</dt>
+                            <dd class="col-sm-6">{{x.name}}</dd>
+                            <dt class="col-sm-6">ID :</dt>
+                            <dd class="col-sm-6">{{x.cid}}</dd>
+                            <dt class="col-sm-6">USERNAME :</dt>
+                            <dd class="col-sm-6">{{x.username}}</dd>
+                            <dt class="col-sm-6 text-truncate">EDIT DETAILS :
+                            </dt>
+                            <dd class="col-sm-6">
+                                <td><a href="/client/updateProfile/{{x.cid}}" id='{{x.cid}}'><i class="zmdi zmdi-edit"></i></a></td>
+                            </dd>
+                            <dd class="col-sm-6">
+                                <td>
+                                    <span class="text-info">Choose a profile picture</span>
+                                    <form class="" action="/client/myProfile" enctype="multipart/form-data" method="post">{% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="image" class="leading-7 text-sm text-gray-600">Profile Picture</label>
+                                            <input required type="file" id="image" name="image" accept="image/*" class="">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </td>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+    </section>
+</section>
+<!--<div class="row" >
+    <div class=" col-md-6  jumbotron">
+        <h1>{{x.name}}</h1>
+        <h1><i class="zmdi zmdi-account " style="font-size: 20px;"> {{name}} - Id {{x.id}}</i></h1>
+        <h1><i class="zmdi zmdi-mail-send" style="font-size: 20px;"> {{x.email}}</i></h1>
+        <span class="mt-3" style="font-size: 20px;"> <i class="zmdi zmdi-mail-send" style="font-size: 20px;"> {{x.levels}} </i></span><br>
+    </div>
+    <div class="col-md-6 p-2 jumbotron">
+        <div class="">
+            <div>
+                <img src='/media/{{x.image}}' style="border-radius:50%; width: 200px; height: 200px; float: right;"  class="img image-rounded p-2">
+            </div>
+        </div>
+    </div>
+</div>-->
+<!--<img src='/media/{{x.image}}'  style="border-radius:50%; width: 200px; height: 200px; float: right;" class="img image-rounded p-2">-->
+{%endblock%}
