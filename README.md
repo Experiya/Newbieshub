@@ -27,3 +27,30 @@ Install my-project with pip
   http://127.0.0.1:8000/
 ```
     
+## Screenshots
+
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-000.jpg?raw=true)
+
+
+
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-004.jpg?raw=true)
+
+  
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-005.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-006.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-007.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-009.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-010.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-011.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-012.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-013.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-014.jpg?raw=true)
+
+## Authors
+
+- [@samir boro](https://github.com/Experiya)
+
+- [@samidha singh](https://github.com/SamidhaSingh06)
+
+- [@shivang mishra]()
+  
