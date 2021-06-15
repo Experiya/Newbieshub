@@ -14,6 +14,10 @@ connect with them and hire the freelancer of their choice, based on their requir
 All communication will be through our platform only.
 
 
+## Demo
+
+http://newbieshub.herokuapp.com/
+
 ## Installation 
 
 Install my-project with pip
