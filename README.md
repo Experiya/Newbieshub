@@ -33,14 +33,19 @@ Install my-project with pip
     
 ## Screenshots
 
-![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-000.jpg?raw=true)
-
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/freelance.jpg?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/Screenshot%20(502).png?raw=true)
+![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/Screenshot%20(515).png?raw=true)
 
 
 ![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-004.jpg?raw=true)
 
   
 ![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-005.jpg?raw=true)
+
+
+
+
 ![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-006.jpg?raw=true)
 ![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-007.jpg?raw=true)
 ![App Screenshot](https://github.com/Experiya/snapshot/blob/main/Dmo_Newbieshub/image-009.jpg?raw=true)
